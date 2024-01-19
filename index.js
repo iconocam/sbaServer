@@ -106,7 +106,7 @@ app.get('/charBackgrounds', (req, res) => {
 //     });
 //     res.json(filteredCharacters);
 // });
-
+// it still won't give me a singular character <:C
 app.get('/characters', (req, res) => {
     const { id, region, role } = req.query;
 
