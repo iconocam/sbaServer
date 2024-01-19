@@ -106,6 +106,29 @@ app.get('/characters', (req, res) => {
     res.json(filteredCharacters);
 });
 
+// Patch 
+
+app.patch('/characters/:id', (req, res) => {
+    const characterId = parseInt(req.params.id);
+    const { championName, championRegion, championRole, conviction } = req.body;
+
+    // Find the character with the given ID
+    const characterToUpdate = charactersInfo.find(character => character.id === characterId);
+
+    if (characterToUpdate) {
+        // Update properties if provided in the request body
+        if (championName) characterToUpdate.championName = championName;
+        if (championRegion) characterToUpdate.championRegion = championRegion;
+        if (championRole) characterToUpdate.championRole = championRole;
+        if (conviction) characterToUpdate.conviction = conviction;
+
+        res.json(characterToUpdate);
+    } else {
+        
+        res.status(404).send('Character not found');
+    }
+});
+
 // Deletion
 app.delete('/characters/:id', (req, res) => {
     const characterId = parseInt(req.params.id);
