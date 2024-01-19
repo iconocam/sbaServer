@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json()); // express.json allows us to send json data 
 
 
 
@@ -94,17 +94,44 @@ app.get('/charBackgrounds', (req, res) => {
     res.json(charBackgrounds);
 });
 
-// Trying to allow query paramaters for region and role
+// Trying to allow query paramaters for region and role, I don't think it works BUT it does allow for query search of 'characters' which then shows all the characters so that's simple enough but lets try again 
+
+// app.get('/characters', (req, res) => {
+//     const { region, role } = req.query;
+//     const filteredCharacters = charData.filter(character => {
+//         return (
+//             (!region || charData.championRegion === charData.championRegion) &&
+//             (!role || charData.championRole === charData.championRole)
+//         );
+//     });
+//     res.json(filteredCharacters);
+// });
+
 app.get('/characters', (req, res) => {
-    const { region, role } = req.query;
-    const filteredCharacters = charData.filter(character => {
-        return (
-            (!region || charData.championRegion === charData.championRegion) &&
-            (!role || charData.championRole === charData.championRole)
-        );
-    });
-    res.json(filteredCharacters);
+    const { id, region, role } = req.query;
+
+    // Check if the 'id' parameter is provided
+    if (id) {
+        const characterById = charData.find(character => character.id === parseInt(id));
+        
+        if (characterById) {
+            // If a character with the specified ID is found, return only that character
+            res.json([characterById]);
+        } else {
+            // If no character is found with the specified ID, return an empty array
+            res.json([]);
+        }
+    } else {
+        // If 'id' parameter is not provided, filter characters based on 'region' and 'role'
+        const filteredCharacters = charData.filter(character => (
+            (!region || character.championRegion === region) &&
+            (!role || character.championRole === role)
+        ));
+        res.json(filteredCharacters);
+    }
 });
+
+
 
 // Patch 
 
