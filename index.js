@@ -28,6 +28,10 @@ const charactersInfo = require('./characters/charData');
 
 const charBackgrounds = require('./lore/lore');
 
+const characters = require('./characterList/allCharacters')
+// I think this is redundant but i was trying something for the filtering feature
+const charData = require('./characters/charData');
+
 
 
 
@@ -85,15 +89,47 @@ app.post('/submitForm', (req, res) => {
         res.status(400).send('Invalid form data');
     }
 });
-//     const { name, email } = req.body;
-//     res.send(`Form submitted successfully. Name: ${name}, Email: ${email}`);
-// });
 
 app.get('/charBackgrounds', (req, res) => {
     res.json(charBackgrounds);
 });
 
+// Trying to allow query paramaters for region and role
+app.get('/characters', (req, res) => {
+    const { region, role } = req.query;
+    const filteredCharacters = charData.filter(character => {
+        return (
+            (!region || charData.championRegion === charData.championRegion) &&
+            (!role || charData.championRole === charData.championRole)
+        );
+    });
+    res.json(filteredCharacters);
+});
 
+// Deletion
+app.delete('/characters/:id', (req, res) => {
+    const characterId = parseInt(req.params.id);
+    
+    // Find the index of the character with the given ID
+    const characterIndex = charactersInfo.findIndex(character => character.id === characterId);
+
+    // Check if the character with the given ID exists
+    // if findIndex doesn't find a match, it returns -1. So, this condition checks if the character with the given ID exists in the array.
+    if (characterIndex !== -1) {
+        // Remove the character from the array
+        charactersInfo.splice(characterIndex, 1);
+        res.send(`Character with ID ${characterId} deleted successfully`);
+    } else {
+        // Character not found
+        res.status(404).send('Character not found');
+    }
+});
+
+// In case anything goes wrong within a route
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+});
 
 
 

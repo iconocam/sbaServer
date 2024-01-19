@@ -33,7 +33,35 @@ const charData = [
         championRegion: "Bilgewater",
         championRole: "Fighter",
         conviction: "I was cutting throats and sinking Noxian war galleys when you were still pissing your britches, boy. You don't want to take me on."
-    }
+    },
+    {
+        id: 6,
+        championName: 'Akali, The Rogue Assassin',
+        championRegion: "Ionia",
+        championRole: "Assassin",
+        conviction: "If you look dangerous, you better be dangerous."
+    },
+    {
+        id: 7,
+        championName: 'Shen, The Eye of Twilight',
+        championRegion: "Ionia",
+        championRole: "Tank",
+        conviction: "The Eye is blind to fear, to hate, to love - to all things that would sway equilibrium."
+    },
+    {
+        id: 8,
+        championName: 'Ahri, The Nine-Tailed Fox',
+        championRegion: "Ionia",
+        championRole: "Mage",
+        conviction: "Human emotions can be more volatile than even the deepest magic."
+    },
+    {
+        id: 9,
+        championName: 'Wukong, The Monkey King',
+        championRegion: "Ionia",
+        championRole: "Fighter",
+        conviction: "My journey is only beginning..."
+    },
 ];
 
 // module.exports = { charactersInfo: charactersInfo};
