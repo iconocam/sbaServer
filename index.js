@@ -55,7 +55,7 @@ app.use(logger)
 
 // Middleware for setting Content Security Policy
 app.use((req, res, next) => {
-    res.setHeader('Content-Security-Policy', "default-src 'self'; img-src 'self' data:");
+    res.setHeader('Content-Security-Policy', "default-src 'self'; img-src 'self' data: https://encrypted-tbn0.gstatic.com");
     next();
 });
 
